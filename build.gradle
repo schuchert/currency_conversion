@@ -12,6 +12,8 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.5.11'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.10.0'
+
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
 }
 

@@ -10,7 +10,27 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CurrencyConverter {
+
+    private static CurrencyConverter currencyConverter;
+
+    public static CurrencyConverter instance() {
+        if(currencyConverter == null) {
+            currencyConverter = new CurrencyConverter();
+        }
+        return currencyConverter;
+    }
+
+    public static CurrencyConverter reset(CurrencyConverter converter) {
+        CurrencyConverter original = currencyConverter;
+        currencyConverter = converter;
+        return original;
+    }
+
     public static Map<String, String> currencySymbols() throws IOException, HttpException {
+        return instance().currencySymbolsImpl();
+    }
+
+    Map<String, String> currencySymbolsImpl() throws IOException {
         LinkedHashMap<String, String> result = new LinkedHashMap<>();
         Content content = Request.
                 Get("https://en.wikipedia.org/wiki/List_of_circulating_currencies")
@@ -32,7 +52,10 @@ public class CurrencyConverter {
     }
 
     public static BigDecimal convertFromTo(String fromCurrency, String toCurrency) {
+        return instance().convertFromToImpl(fromCurrency, toCurrency);
+    }
 
+    BigDecimal convertFromToImpl(String fromCurrency, String toCurrency) {
         try {
             Map<String, String> symbolToName = currencySymbols();
             if (!symbolToName.containsKey(fromCurrency))
@@ -42,14 +65,7 @@ public class CurrencyConverter {
                 throw new IllegalArgumentException(String.format(
                         "Invalid to currency: %s", toCurrency));
 
-            String url = String.format("http://www.gocurrency.com/v2/dorate.php?inV=1&from=%s&to=%s&Calculate=Convert", toCurrency, fromCurrency);
-
-            Content content = Request.
-                    Get(url)
-                    .execute()
-                    .returnContent();
-
-            StringBuffer result = new StringBuffer(content.toString());
+            StringBuffer result = instance().readConversionsImpl(fromCurrency, toCurrency);
 
             String theWholeThing = result.toString();
             int start = theWholeThing.lastIndexOf("<div id=\"converter_results\"><ul><li>");
@@ -66,5 +82,17 @@ public class CurrencyConverter {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    StringBuffer readConversionsImpl(String fromCurrency, String toCurrency) throws IOException {
+        String url = String.format("http://www.gocurrency.com/v2/dorate.php?inV=1&from=%s&to=%s&Calculate=Convert", toCurrency, fromCurrency);
+
+        Content content = Request.
+                Get(url)
+                .execute()
+                .returnContent();
+
+        return new StringBuffer(content.toString());
     }
 }
