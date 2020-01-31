@@ -55,10 +55,10 @@ public class CurrencyConverter {
             int start = theWholeThing.lastIndexOf("<div id=\"converter_results\"><ul><li>");
             String substring = result.substring(start);
             int startOfInterestingStuff = substring.indexOf("<b>") + 3;
-            int endOfIntererestingStuff = substring.indexOf("</b>",
+            int endOfInterestingStuff = substring.indexOf("</b>",
                     startOfInterestingStuff);
             String interestingStuff = substring.substring(
-                    startOfInterestingStuff, endOfIntererestingStuff);
+                    startOfInterestingStuff, endOfInterestingStuff);
             String[] parts = interestingStuff.split("=");
             String value = parts[1].trim().split(" ")[0];
             BigDecimal bottom = new BigDecimal(value);
