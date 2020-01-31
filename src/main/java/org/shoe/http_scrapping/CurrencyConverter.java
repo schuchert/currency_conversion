@@ -1,19 +1,10 @@
 package org.shoe.http_scrapping;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
-import org.apache.http.impl.DefaultBHttpClientConnection;
-import org.apache.http.message.BasicHttpRequest;
-import org.apache.http.protocol.HttpCoreContext;
-import org.apache.http.protocol.HttpRequestExecutor;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
