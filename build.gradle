@@ -8,11 +8,14 @@ repositories {
 
 dependencies {
     implementation 'com.google.guava:guava:28.1-jre'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
-    compile 'org.apache.httpcomponents:fluent-hc:4.5.11'
+    implementation 'org.apache.httpcomponents:httpclient:4.5'
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.11'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+    testImplementation 'org.mockito:mockito-core:3.2.4'
+
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+    
 }
 
 test {
